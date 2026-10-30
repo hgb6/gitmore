@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUTURE OS</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #06101d;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.phone {
+  max-width: 420px;
+  min-height: 800px;
+  margin: auto;
+  padding: 25px;
+  border: 1px solid #16cfff;
+  border-radius: 30px;
+  background: linear-gradient(160deg,#102a43,#050b16);
+  box-shadow: 0 0 35px #008cff55;
+}
+
+.status {
+  display: flex;
+  justify-content: space-between;
+  color: #42eaff;
+  font-size: 13px;
+}
+
+.clock {
+  text-align: center;
+  margin: 55px 0 35px;
+}
+
+.clock h1 {
+  font-size: 55px;
+  margin: 0;
+  text-shadow: 0 0 20px #00cfff;
+}
+
+.clock p {
+  color: #75b7d9;
+}
+
+h2 {
+  color: #42eaff;
+  font-size: 17px;
+}
+
+.apps {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.app {
+  background: #102c46;
+  border: 1px solid #17618c;
+  border-radius: 15px;
+  padding: 20px 5px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  transition: .2s;
+}
+
+.app:hover {
+  background: #075078;
+  box-shadow: 0 0 18px #00cfff;
+  transform: translateY(-3px);
+}
+
+.app span {
+  display: block;
+  font-size: 27px;
+  margin-bottom: 10px;
+}
+
+.panel {
+  background: #0b2034;
+  border: 1px solid #145477;
+  border-radius: 15px;
+  padding: 18px;
+  margin-top: 25px;
+}
+
+button {
+  background: #087ca8;
+  border: 1px solid #42eaff;
+  color: white;
+  padding: 12px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  background: #06101d;
+  border: 1px solid #1685b5;
+  color: white;
+  border-radius: 8px;
+}
+
+#screen {
+  display: none;
+}
+
+.back {
+  margin-bottom: 20px;
+}
+
+a {
+  color: #42eaff;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+<div class="status">
+  <span>FUTURE OS</span>
+  <span>● ONLINE | 100%</span>
+</div>
+
+<div id="home">
+
+<div class="clock">
+  <h1 id="time">00:00</h1>
+  <p id="date"></p>
+  <h2>WELCOME TO THE FUTURE</h2>
+</div>
+
+<h2>APPLICATIONS</h2>
+
+<div class="apps">
+
+<div class="app" onclick="openApp('website')">
+  <span>🌐</span>Website
+</div>
+
+<div class="app" onclick="openApp('settings')">
+  <span>⚙️</span>Settings
+</div>
+
+<div class="app" onclick="openApp('system')">
+  <span>🖥️</span>System
+</div>
+
+<div class="app" onclick="openApp('browser')">
+  <span>🔎</span>Search
+</div>
+
+<div class="app" onclick="openApp('about')">
+  <span>🚀</span>About
+</div>
+
+<div class="app" onclick="openApp('tools')">
+  <span>🛠️</span>Tools
+</div>
+
+</div>
+
+<div class="panel">
+  <h2>SYSTEM STATUS</h2>
+  <p>● Core system: Operational</p>
+  <p>● Interface: Active</p>
+  <p>● Network: Ready</p>
+</div>
+
+</div>
+
+<div id="screen">
+
+<button class="back" onclick="goHome()">← HOME</button>
+
+<h2 id="screenTitle"></h2>
+
+<div id="screenContent"></div>
+
+</div>
+
+</div>
+
+<script>
+
+// CLOCK
+function updateClock() {
+  const now = new Date();
+
+  document.getElementById("time").textContent =
+    now.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+
+  document.getElementById("date").textContent =
+    now.toDateString();
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+// OPEN APPLICATIONS
+function openApp(app) {
+
+  document.getElementById("home").style.display = "none";
+  document.getElementById("screen").style.display = "block";
+
+  const title = document.getElementById("screenTitle");
+  const content = document.getElementById("screenContent");
+
+  if(app === "website") {
+    title.textContent = "WEBSITE PORTAL";
+
+    content.innerHTML = `
+      <p>Enter a website address:</p>
+      <input id="websiteURL" placeholder="https://example.com">
+      <button onclick="visitWebsite()">OPEN WEBSITE</button>
+    `;
+  }
+
+  if(app === "browser") {
+    title.textContent = "WEB SEARCH";
+
+    content.innerHTML = `
+      <input id="searchText" placeholder="Search the web...">
+      <button onclick="searchWeb()">SEARCH</button>
+    `;
+  }
+
+  if(app === "settings") {
+    title.textContent = "SYSTEM SETTINGS";
+
+    content.innerHTML = `
+      <p>Interface: FUTURE OS</p>
+      <p>Theme: Neon Blue</p>
+      <p>Version: 1.0</p>
+      <button onclick="document.body.style.background='#101010'">
+        DARK MODE
+      </button>
+      <button onclick="document.body.style.background='#06101d'">
+        RESET THEME
+      </button>
+    `;
+  }
+
+  if(app === "system") {
+    title.textContent = "SYSTEM MONITOR";
+
+    content.innerHTML = `
+      <p>CPU: Operational</p>
+      <p>Network: Ready</p>
+      <p>Security: Active</p>
+    `;
+  }
+
+  if(app === "about") {
+    title.textContent = "ABOUT FUTURE OS";
+
+    content.innerHTML = `
+      <p>Welcome to FUTURE OS.</p>
+      <p>A custom futuristic mobile interface.</p>
+      <p>Version 1.0</p>
+    `;
+  }
+
+  if(app === "tools") {
+    title.textContent = "SYSTEM TOOLS";
+
+    content.innerHTML = `
+      <p>Device tools and utilities.</p>
+      <button onclick="alert('All systems operational!')">
+        RUN DIAGNOSTICS
+      </button>
+    `;
+  }
+}
+
+// WEBSITE LINK
+function visitWebsite() {
+
+  let url = document.getElementById("websiteURL").value.trim();
+
+  if(!url) {
+    alert("Please enter a website address.");
+    return;
+  }
+
+  if(!/^https?:\/\//i.test(url)) {
+    url = "https://" + url;
+  }
+
+  try {
+    const parsed = new URL(url);
+
+    if(!["http:","https:"].includes(parsed.protocol)) {
+      throw new Error("Invalid protocol");
+    }
+
+    window.open(parsed.href,"_blank","noopener,noreferrer");
+
+  } catch(error) {
+    alert("Please enter a valid website address.");
+  }
+}
+
+// SEARCH THE WEB
+function searchWeb() {
+  const query = document.getElementById("searchText").value.trim();
+
+  if(query) {
+    window.open(
+      "https://www.google.com/search?q=" + encodeURIComponent(query),
+      "_blank",
+      "noopener,noreferrer"
+    );
+  }
+}
+
+// RETURN HOME
+function goHome() {
+  document.getElementById("screen").style.display = "none";
+  document.getElementById("home").style.display = "block";
+}
+
+</script>
+
+</body>
+</html>
