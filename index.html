@@ -4,460 +4,633 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FUTURE OS 2.0</title>
+<title>FUTURE OS - Picture Edition</title>
 
 <style>
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 :root {
   --cyan: #00eaff;
-  --blue: #087cff;
-  --bg: #020611;
+  --blue: #087bff;
+  --dark: #020817;
 }
 
 body {
-  background: var(--bg);
+  min-height: 100vh;
+  background: #010510;
   color: white;
   font-family: Arial, sans-serif;
-  min-height: 100vh;
   overflow-x: hidden;
 }
-
-/* GALAXY BACKGROUND */
 
 #stars {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: -2;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 35%,
-    #073c6733, transparent 55%),
-    linear-gradient(180deg,#020611,#06172c);
   z-index: -1;
 }
 
-/* BOOT SCREEN */
+/* MAIN TWO-PANEL LAYOUT */
 
-#boot {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: radial-gradient(circle,#07355b,#020611 65%);
+.layout {
+  max-width: 1500px;
+  min-height: 100vh;
+  margin: auto;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.panel {
+  min-height: 850px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #078bff;
+  border-radius: 28px;
+  background:
+    radial-gradient(ellipse at 50% 45%, #063b6a88, transparent 55%),
+    linear-gradient(160deg,#07182f,#010713);
+  box-shadow:
+    0 0 20px #008cff44,
+    inset 0 0 40px #0066aa22;
+}
+
+/* LEFT PANEL */
+
+.left {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  transition: opacity 1s, visibility 1s;
+  padding: 35px 25px;
 }
 
-#boot.hide {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.boot-planet {
-  width: 145px;
-  height: 145px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 30% 25%,
-    #b6ffff,#058bd9 30%,#071b50 70%);
-  box-shadow:
-    0 0 35px #00bfff,
-    0 0 90px #006aff;
-  animation: planet 4s linear infinite;
-  position: relative;
-}
-
-.boot-planet::after {
-  content: "";
-  position: absolute;
-  width: 215px;
-  height: 55px;
-  border: 3px solid #00eaff;
-  border-radius: 50%;
-  top: 42px;
-  left: -38px;
-  transform: rotate(-25deg);
-  box-shadow: 0 0 20px #00dfff;
-}
-
-@keyframes planet {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.boot-title {
-  color: var(--cyan);
-  font-size: clamp(28px,6vw,50px);
-  letter-spacing: 10px;
-  margin-top: 45px;
-  text-shadow: 0 0 25px var(--cyan);
-  animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-  from { opacity: .6; }
-  to { opacity: 1; text-shadow: 0 0 40px var(--cyan); }
-}
-
-.boot-sub {
-  margin-top: 12px;
-  color: #8bcfff;
-  letter-spacing: 5px;
-  font-size: 10px;
-}
-
-.loading {
-  width: 230px;
-  height: 5px;
-  background: #183b58;
-  margin-top: 45px;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.loading-bar {
-  width: 0;
-  height: 100%;
-  background: var(--cyan);
-  box-shadow: 0 0 20px var(--cyan);
-  animation: load 4s linear forwards;
-}
-
-@keyframes load {
-  to { width: 100%; }
-}
-
-.boot-status {
-  margin-top: 15px;
-  color: #6acfff;
-  font-size: 10px;
-  letter-spacing: 3px;
-}
-
-#skip {
-  margin-top: 25px;
-  padding: 10px 25px;
-  color: var(--cyan);
-  background: transparent;
-  border: 1px solid var(--cyan);
-  border-radius: 30px;
-  cursor: pointer;
-}
-
-/* MAIN DASHBOARD */
-
-.container {
-  width: min(1250px,94%);
-  margin: auto;
-  padding: 25px 0 130px;
-}
-
-.topbar {
+.corner-info {
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #00bfff55;
-  padding: 15px 5px 22px;
+  color: #20dfff;
+  font-size: 10px;
+  letter-spacing: 3px;
+  line-height: 2;
 }
 
-.brand {
-  color: var(--cyan);
-  font-size: 21px;
-  letter-spacing: 5px;
-  font-weight: bold;
-  text-shadow: 0 0 15px var(--cyan);
-}
-
-.status {
-  color: #73dfff;
-  font-size: 11px;
-  letter-spacing: 2px;
-}
-
-.hero {
-  text-align: center;
-  padding: 65px 10px 45px;
-}
-
-.hero h1 {
-  font-size: clamp(38px,8vw,75px);
-  letter-spacing: 9px;
-  color: white;
-  text-shadow: 0 0 25px #00cfff;
-}
-
-.hero p {
-  color: #72bce4;
-  letter-spacing: 5px;
-  font-size: 11px;
-  margin-top: 15px;
-}
-
-.clock {
-  margin-top: 30px;
-  font-size: 40px;
-  color: var(--cyan);
-  text-shadow: 0 0 20px #008cff;
-  font-weight: bold;
-}
-
-.date {
-  color: #8cb8d5;
-  margin-top: 8px;
-  font-size: 12px;
-}
-
-/* PLANET DISPLAY */
-
-.planet-area {
-  height: 175px;
+.planet-zone {
+  width: 100%;
+  height: 420px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 30px;
+  position: relative;
+  margin-top: 25px;
 }
 
 .planet {
-  width: 105px;
-  height: 105px;
+  position: relative;
+  width: 260px;
+  height: 260px;
   border-radius: 50%;
   background:
     radial-gradient(circle at 30% 25%,
-    #c3ffff,#008dce 30%,#06133d 75%);
+    #c9ffff 0%,
+    #32cfff 13%,
+    #0869c9 40%,
+    #06194e 75%,
+    #02091e 100%);
   box-shadow:
-    0 0 30px #00bfff,
-    0 0 65px #006aff77;
-  position: relative;
-  animation: float 4s ease-in-out infinite;
+    inset -30px -25px 45px #000b37,
+    0 0 30px #008dff,
+    0 0 80px #007bff66;
+  animation: rotatePlanet 20s linear infinite;
 }
 
 .planet::before {
   content: "";
   position: absolute;
-  inset: -17px -30px;
-  border: 2px solid #00dfff;
+  inset: 15%;
+  border-radius: 50%;
+  background:
+    repeating-linear-gradient(
+      20deg,
+      transparent 0 12px,
+      #4deaff22 13px 16px
+    );
+  filter: blur(3px);
+}
+
+.planet::after {
+  content: "";
+  position: absolute;
+  inset: -35px -75px;
+  border: 3px solid #00dfff;
+  border-radius: 50%;
+  transform: rotate(-24deg);
+  box-shadow:
+    0 0 15px #00cfff,
+    inset 0 0 12px #00cfff;
+}
+
+@keyframes rotatePlanet {
+  to { filter: hue-rotate(15deg); }
+}
+
+.orbit {
+  position: absolute;
+  width: 380px;
+  height: 150px;
+  border: 2px solid #008dff;
   border-radius: 50%;
   transform: rotate(-25deg);
-  box-shadow: 0 0 15px #00cfff;
+  box-shadow: 0 0 18px #008cff;
+  animation: orbitPulse 3s infinite alternate;
 }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+.orbit.two {
+  width: 430px;
+  height: 200px;
+  transform: rotate(35deg);
+  border-color: #00dfff88;
 }
 
-/* APP SECTION */
+@keyframes orbitPulse {
+  to { opacity: .3; }
+}
 
-.section-heading {
+.energy {
+  position: absolute;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(
+    transparent,
+    #00eaff,
+    transparent
+  );
+  box-shadow: 0 0 20px #00eaff;
+  animation: energyPulse 3s infinite;
+}
+
+@keyframes energyPulse {
+  50% { opacity: .2; }
+}
+
+.planet-title {
+  position: absolute;
+  font-size: clamp(30px,5vw,53px);
+  font-weight: bold;
+  letter-spacing: 9px;
+  color: white;
+  text-shadow: 0 0 20px #00cfff;
+  z-index: 2;
+}
+
+.planet-subtitle {
+  position: absolute;
+  margin-top: 75px;
+  color: #c0f5ff;
+  font-size: 10px;
+  letter-spacing: 5px;
+  z-index: 2;
+}
+
+/* FLOOR */
+
+.floor {
+  width: 100%;
+  height: 100px;
+  position: relative;
+  margin-top: -10px;
+  border-radius: 50%;
+  border: 2px solid #087dff;
+  box-shadow: 0 0 25px #008cff;
+  background: radial-gradient(ellipse,#07375d,#020817 70%);
+}
+
+.floor::before {
+  content: "";
+  position: absolute;
+  inset: 15px 35px;
+  border: 2px solid #00dfff;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #00dfff;
+}
+
+/* LOADING */
+
+.loading-area {
+  width: 85%;
+  margin-top: 25px;
+  text-align: center;
+}
+
+.loading-label {
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: #6beaff;
+  margin-bottom: 15px;
+}
+
+.progress {
+  height: 14px;
+  border: 1px solid #00cfff;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #03162d;
+  box-shadow: 0 0 12px #008cff;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg,#008cff,#00eaff,#70faff);
+  box-shadow: 0 0 20px #00eaff;
+  animation: progressGlow 2s infinite alternate;
+}
+
+@keyframes progressGlow {
+  to { filter: brightness(1.7); }
+}
+
+.loading-percent {
+  color: #6deaff;
+  margin-top: 12px;
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+.indicators {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  margin-top: 35px;
+  border-top: 1px solid #0875b5;
+  padding-top: 22px;
+}
+
+.indicator {
+  text-align: center;
+  color: #58ddff;
+  font-size: 10px;
+  letter-spacing: 2px;
+  border-right: 1px solid #17466c;
+  line-height: 2;
+}
+
+.indicator:last-child {
+  border: none;
+}
+
+.indicator strong {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.bottom-phrase {
+  margin-top: auto;
+  padding-top: 35px;
+  color: #77a8d4;
+  letter-spacing: 6px;
+  font-size: 11px;
+}
+
+/* RIGHT PANEL */
+
+.right {
+  padding: 30px 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+.right::before {
+  content: "";
+  position: absolute;
+  width: 350px;
+  height: 500px;
+  border-radius: 50%;
+  right: -160px;
+  top: 0;
+  background: radial-gradient(circle,#1267a866,#04152d00 70%);
+  pointer-events: none;
+}
+
+.right-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 22px;
+  color: #b7f4ff;
+  font-size: 13px;
+  letter-spacing: 3px;
+  position: relative;
 }
 
-.section-heading h2 {
-  font-size: 14px;
-  letter-spacing: 5px;
+.right-top span:last-child {
   color: var(--cyan);
 }
 
-.section-heading span {
-  color: #649ab8;
+.time-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 55px 5px 35px;
+  position: relative;
+}
+
+.time {
+  font-size: clamp(40px,5vw,65px);
+  font-weight: 300;
+  letter-spacing: 4px;
+  text-shadow: 0 0 18px #008cff;
+}
+
+.date {
+  font-size: 13px;
+  color: #b5d8ee;
+  margin-top: 8px;
+}
+
+.weather {
+  text-align: center;
+  color: #d1f5ff;
+}
+
+.weather strong {
+  display: block;
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+.weather small {
+  color: #8ac4e6;
   font-size: 10px;
 }
 
+/* WELCOME BAR */
+
+.welcome {
+  position: relative;
+  margin: 15px 0 30px;
+  padding: 23px;
+  border: 1px solid #00cfff;
+  border-radius: 16px;
+  background: linear-gradient(100deg,#052443dd,#03101fdd);
+  box-shadow: 0 0 20px #008cff44;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.welcome h2 {
+  color: #36eaff;
+  font-size: 14px;
+  letter-spacing: 4px;
+}
+
+.welcome p {
+  color: #a9d7ee;
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+
+.wave {
+  color: var(--cyan);
+  font-size: 25px;
+  letter-spacing: 2px;
+  animation: wave 1s infinite alternate;
+}
+
+@keyframes wave {
+  to { text-shadow: 0 0 20px cyan; }
+}
+
+/* ENTERTAINMENT CARDS */
+
 .apps {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 20px;
+  grid-template-columns: repeat(2,1fr);
+  gap: 18px;
+  position: relative;
 }
 
 .app {
-  min-height: 215px;
-  border-radius: 18px;
-  border: 1px solid #00aaff77;
-  background: linear-gradient(145deg,#102b49cc,#030b1ccc);
+  height: 205px;
+  text-decoration: none;
+  color: white;
+  border-radius: 17px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
-  color: white;
   position: relative;
   overflow: hidden;
-  transition: .35s;
-  cursor: pointer;
+  background: #06182c;
+  border: 2px solid #00cfff;
+  transition: .3s;
 }
 
 .app::before {
   content: "";
   position: absolute;
-  top: -100%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    transparent,
-    #00dfff15,
-    transparent
-  );
-  transform: rotate(35deg);
-  transition: .6s;
-}
-
-.app:hover::before {
-  top: 100%;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%,#087dff66,transparent 70%);
+  transition: .3s;
 }
 
 .app:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 0 35px #00bfff66;
-  border-color: var(--cyan);
+  transform: translateY(-7px) scale(1.025);
+  box-shadow: 0 0 30px #00dfff88;
+}
+
+.app:hover::before {
+  background: radial-gradient(circle,#00cfff66,transparent 75%);
 }
 
 .app-icon {
-  font-size: 55px;
-  margin-bottom: 20px;
-  z-index: 1;
+  font-size: 54px;
+  font-weight: bold;
+  position: relative;
+  text-shadow: 0 0 20px currentColor;
 }
 
 .app h3 {
-  font-size: 16px;
-  letter-spacing: 3px;
-  z-index: 1;
+  font-size: 17px;
+  margin-top: 15px;
+  letter-spacing: 2px;
+  position: relative;
 }
 
-.app small {
-  color: #83b6d2;
-  margin-top: 10px;
+.app p {
+  color: #c1eaff;
   font-size: 9px;
   letter-spacing: 2px;
-  z-index: 1;
+  margin-top: 12px;
+  position: relative;
 }
 
-.netflix { color: #ff2638; text-shadow: 0 0 20px red; }
-.disney { color: #79baff; text-shadow: 0 0 20px blue; }
-.youtube { color: #ff3434; text-shadow: 0 0 20px red; }
-.popcorn { color: #ffdc79; text-shadow: 0 0 20px orange; }
+.netflix { border-color: #ff334c; color: #ff334c; }
+.disney { border-color: #168fff; color: #9acbff; }
+.youtube { border-color: #f22f4a; color: #ff4141; }
+.popcorn { border-color: #ffc94d; color: #ffe08a; }
 
-.netflix-card { border-color: #ff263855; }
-.disney-card { border-color: #368aff66; }
-.youtube-card { border-color: #ff343466; }
-.popcorn-card { border-color: #ffc64b66; }
-
-/* LOWER PANEL */
-
-.system-panel {
-  margin-top: 45px;
-  padding: 22px;
-  border: 1px solid #00bfff55;
-  background: #061b30bb;
-  border-radius: 15px;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.system-item {
-  text-align: center;
-  font-size: 11px;
-  color: #72caff;
-  letter-spacing: 2px;
-}
-
-.system-item strong {
-  display: block;
-  color: var(--cyan);
-  font-size: 19px;
-  margin-bottom: 7px;
-}
-
-/* NAVIGATION DOCK */
+/* BOTTOM DOCK */
 
 .dock {
-  position: fixed;
-  bottom: 22px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(430px,92%);
-  padding: 13px 20px;
+  margin-top: auto;
+  padding: 20px 12px;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background: #061c31dd;
-  border: 1px solid #00dfff99;
-  border-radius: 25px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 0 30px #007bff44;
-  z-index: 5;
+  background: linear-gradient(90deg,#06182e,#0b2948,#06182e);
+  border: 1px solid #00bfff;
+  border-radius: 18px;
+  box-shadow: 0 0 22px #008cff55;
+  position: relative;
+  top: 25px;
 }
 
 .dock button {
+  border: none;
   background: transparent;
-  color: #69dfff;
-  border: 0;
-  font-size: 22px;
+  color: #9deeff;
+  font-size: 24px;
   cursor: pointer;
   transition: .2s;
 }
 
 .dock button:hover {
   color: white;
-  transform: scale(1.3);
-  text-shadow: 0 0 15px var(--cyan);
+  text-shadow: 0 0 20px cyan;
+  transform: scale(1.2);
 }
 
-.power {
-  width: 53px;
-  height: 53px;
-  border: 2px solid var(--cyan) !important;
+.dock .main-button {
+  width: 62px;
+  height: 62px;
+  border: 2px solid #00eaff;
   border-radius: 50%;
-  box-shadow: 0 0 20px #00cfff;
+  font-size: 30px;
+  box-shadow: 0 0 25px #00cfff;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  50% { box-shadow: 0 0 40px #00eaff; }
+}
+
+/* STARTUP OVERLAY */
+
+#startup {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: radial-gradient(circle,#083b67,#010510 70%);
+  transition: opacity 1s, visibility 1s;
+}
+
+#startup.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.start-logo {
+  font-size: clamp(35px,7vw,75px);
+  letter-spacing: 10px;
+  color: #5beaff;
+  text-shadow: 0 0 35px #00bfff;
+  animation: startGlow 1.5s infinite alternate;
+}
+
+.start-ring {
+  width: 150px;
+  height: 150px;
+  border: 3px solid #00dfff;
+  border-radius: 50%;
+  margin-bottom: 40px;
+  box-shadow: 0 0 40px #008cff;
+  animation: spin 4s linear infinite;
+  position: relative;
+}
+
+.start-ring::after {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border: 2px solid #70faff;
+  border-radius: 50%;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes startGlow {
+  to { text-shadow: 0 0 60px cyan; }
+}
+
+#startup p {
+  color: #a5eaff;
+  font-size: 11px;
+  letter-spacing: 5px;
+  margin-top: 15px;
+}
+
+#startup button {
+  margin-top: 35px;
+  background: transparent;
+  color: cyan;
+  border: 1px solid cyan;
+  padding: 10px 25px;
+  border-radius: 30px;
+  cursor: pointer;
 }
 
 /* MOBILE */
 
-@media(max-width:750px) {
-  .apps {
-    grid-template-columns: repeat(2,1fr);
-    gap: 12px;
+@media(max-width:850px) {
+  .layout {
+    grid-template-columns: 1fr;
+    max-width: 600px;
   }
 
-  .app {
-    min-height: 175px;
+  .panel {
+    min-height: 850px;
   }
 
-  .hero {
-    padding-top: 45px;
+  .left {
+    min-height: 850px;
   }
 
-  .hero h1 {
-    letter-spacing: 5px;
+  .right {
+    min-height: 850px;
   }
 
-  .brand {
-    font-size: 15px;
+  .time {
+    font-size: 43px;
   }
 }
 
-@media(max-width:380px) {
-  .app h3 { font-size: 12px; }
+@media(max-width:430px) {
+  .layout { padding: 7px; gap: 12px; }
+  .panel { border-radius: 18px; }
+  .left,.right { padding: 22px 14px; }
+  .planet { width: 190px; height: 190px; }
+  .orbit { width: 280px; height: 120px; }
+  .orbit.two { width: 320px; }
+  .planet-title { font-size: 28px; letter-spacing: 5px; }
+  .app { height: 175px; }
   .app-icon { font-size: 43px; }
+  .app h3 { font-size: 13px; }
+  .time { font-size: 37px; }
+  .bottom-phrase { font-size: 9px; }
 }
 </style>
 </head>
@@ -466,210 +639,219 @@ body::before {
 
 <canvas id="stars"></canvas>
 
-<!-- BOOT SCREEN -->
+<!-- STARTUP -->
 
-<div id="boot">
-
-  <div class="boot-planet"></div>
-
-  <div class="boot-title">FUTURE OS</div>
-
-  <div class="boot-sub">ULTIMATE EDITION 2.0</div>
-
-  <div class="loading">
-    <div class="loading-bar"></div>
+<div id="startup">
+  <div class="start-ring"></div>
+  <div class="start-logo">FUTURE OS</div>
+  <p>ENTERTAINMENT BEYOND LIMITS</p>
+  <div style="width:230px;margin-top:40px">
+    <div class="progress">
+      <div class="progress-bar" id="bootProgress"></div>
+    </div>
   </div>
-
-  <div class="boot-status" id="bootStatus">
-    INITIALIZING GALAXY...
-  </div>
-
-  <button id="skip" onclick="startOS()">
-    SKIP INTRO
-  </button>
-
+  <p id="bootText">INITIALIZING SYSTEM...</p>
+  <button onclick="startSystem()">ENTER SYSTEM</button>
 </div>
 
-<!-- MAIN OS -->
+<div class="layout">
 
-<div class="container" id="dashboard">
+<!-- LEFT BOOT PANEL -->
 
-  <header class="topbar">
+<section class="panel left">
 
-    <div class="brand">✧ FUTURE OS</div>
+  <div class="corner-info">
+    <div>
+      FUTURE OS<br>
+      V 3.0.0
+    </div>
+    <div style="text-align:right">
+      BUILD 2026.10.30<br>
+      EXPERIMENTAL
+    </div>
+  </div>
 
-    <div class="status">
-      ● SYSTEM ONLINE
-      <br><br>
-      BUILD 2.0.26
+  <div class="planet-zone">
+
+    <div class="energy"></div>
+
+    <div class="orbit"></div>
+    <div class="orbit two"></div>
+
+    <div class="planet"></div>
+
+    <div class="planet-title">FUTURE OS</div>
+    <div class="planet-subtitle">
+      ENTERTAINMENT BEYOND LIMITS
     </div>
 
-  </header>
-
-  <section class="hero">
-
-    <h1>WELCOME BACK</h1>
-
-    <p>YOUR ENTERTAINMENT. YOUR UNIVERSE.</p>
-
-    <div class="clock" id="clock">00:00</div>
-
-    <div class="date" id="date"></div>
-
-  </section>
-
-  <div class="planet-area">
-    <div class="planet"></div>
   </div>
 
-  <div class="section-heading">
-    <h2>ENTERTAINMENT HUB</h2>
-    <span>04 APPLICATIONS</span>
+  <div class="floor"></div>
+
+  <div class="loading-area">
+
+    <div class="loading-label" id="systemLabel">
+      SYSTEM INITIALIZED
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar"></div>
+    </div>
+
+    <div class="loading-percent">100%</div>
+
   </div>
 
-  <section class="apps">
+  <div class="indicators">
 
-    <!-- NETFLIX -->
+    <div class="indicator">
+      <strong>▦</strong>
+      SYSTEM<br>OK
+    </div>
 
-    <a class="app netflix-card"
+    <div class="indicator">
+      <strong>◎</strong>
+      NETWORK<br>OK
+    </div>
+
+    <div class="indicator">
+      <strong>◇</strong>
+      SECURITY<br>OK
+    </div>
+
+    <div class="indicator">
+      <strong>▣</strong>
+      BATTERY<br>100%
+    </div>
+
+  </div>
+
+  <div class="bottom-phrase">
+    THE FUTURE IS YOURS
+  </div>
+
+</section>
+
+<!-- RIGHT DASHBOARD -->
+
+<section class="panel right">
+
+  <div class="right-top">
+    <span>◎ &nbsp; FUTURE OS</span>
+    <span>◉ WIFI &nbsp; ▰ 100%</span>
+  </div>
+
+  <div class="time-area">
+
+    <div>
+      <div class="time" id="clock">00:00</div>
+      <div class="date" id="date">Loading...</div>
+    </div>
+
+    <div class="weather">
+      <strong>☼ 12°C</strong>
+      <small>SPACE CONDITIONS</small>
+    </div>
+
+  </div>
+
+  <div class="welcome">
+    <div>
+      <h2>WELCOME BACK</h2>
+      <p>YOUR ENTERTAINMENT HUB</p>
+    </div>
+    <div class="wave">〰〰〰</div>
+  </div>
+
+  <div class="apps">
+
+    <a class="app netflix"
        href="https://www.netflix.com/"
        target="_blank"
        rel="noopener noreferrer">
-
-      <div class="app-icon netflix">N</div>
-
+      <div class="app-icon">N</div>
       <h3>NETFLIX</h3>
-
-      <small>MOVIES & SERIES</small>
-
+      <p>TV SHOWS • MOVIES • MORE</p>
     </a>
 
-    <!-- DISNEY -->
-
-    <a class="app disney-card"
+    <a class="app disney"
        href="https://www.disneyplus.com/"
        target="_blank"
        rel="noopener noreferrer">
-
-      <div class="app-icon disney">✦</div>
-
-      <h3>DISNEY+</h3>
-
-      <small>WORLDS OF STORIES</small>
-
+      <div class="app-icon">✧</div>
+      <h3>Disney+</h3>
+      <p>DISNEY • PIXAR • MARVEL</p>
     </a>
 
-    <!-- YOUTUBE -->
-
-    <a class="app youtube-card"
+    <a class="app youtube"
        href="https://www.youtube.com/"
        target="_blank"
        rel="noopener noreferrer">
-
-      <div class="app-icon youtube">▶</div>
-
-      <h3>YOUTUBE</h3>
-
-      <small>WATCH & DISCOVER</small>
-
+      <div class="app-icon">▶</div>
+      <h3>YouTube</h3>
+      <p>WATCH • DISCOVER • CREATE</p>
     </a>
 
-    <!-- POPCORN GAME -->
-
-    <a class="app popcorn-card"
+    <a class="app popcorn"
        href="https://doodles.google/doodle/celebrating-popcorn/"
        target="_blank"
        rel="noopener noreferrer">
-
-      <div class="app-icon popcorn">🍿</div>
-
+      <div class="app-icon">🍿</div>
       <h3>POPCORN GAME</h3>
-
-      <small>PLAY & ENJOY</small>
-
+      <p>PLAY • RELAX • ENJOY</p>
     </a>
 
-  </section>
+  </div>
 
-  <section class="system-panel">
+  <nav class="dock">
 
-    <div class="system-item">
-      <strong>●</strong>
-      SYSTEM
-      <br>ONLINE
-    </div>
+    <button title="Home" onclick="home()">⌂</button>
 
-    <div class="system-item">
-      <strong>◉</strong>
-      NETWORK
-      <br>READY
-    </div>
+    <button title="Galaxy" onclick="galaxy()">◎</button>
 
-    <div class="system-item">
-      <strong>◆</strong>
-      SECURITY
-      <br>ACTIVE
-    </div>
+    <button class="main-button"
+            title="Restart"
+            onclick="restart()">✧</button>
 
-    <div class="system-item">
-      <strong>100%</strong>
-      POWER
-      <br>READY
-    </div>
+    <button title="Sound" onclick="sound()">♫</button>
 
-  </section>
+    <button title="Fullscreen" onclick="fullScreen()">⏻</button>
 
+  </nav>
+
+</section>
 </div>
-
-<!-- NAVIGATION DOCK -->
-
-<nav class="dock">
-
-  <button title="Home" onclick="home()">⌂</button>
-
-  <button title="Galaxy" onclick="galaxy()">✧</button>
-
-  <button class="power" title="Restart" onclick="restart()">
-    ⏻
-  </button>
-
-  <button title="Sound" onclick="soundToggle()" id="soundButton">
-    ♪
-  </button>
-
-  <button title="Fullscreen" onclick="fullscreen()">⛶</button>
-
-</nav>
 
 <script>
 
 // STARTUP SEQUENCE
 
-const messages = [
-  "INITIALIZING GALAXY...",
-  "CONNECTING TO CORE...",
-  "LOADING ENTERTAINMENT HUB...",
-  "ACTIVATING HOLOGRAPHIC DISPLAY...",
+const bootMessages = [
+  "INITIALIZING SYSTEM...",
+  "CONNECTING TO GALAXY...",
+  "LOADING HOLOGRAPHIC INTERFACE...",
+  "ACTIVATING ENTERTAINMENT HUB...",
   "SYSTEM READY..."
 ];
 
-let bootIndex = 0;
+let bootStep = 0;
 
-const status = document.getElementById("bootStatus");
+const bootText = document.getElementById("bootText");
 
-const statusTimer = setInterval(() => {
-  bootIndex++;
-  if (bootIndex < messages.length) {
-    status.textContent = messages[bootIndex];
+const bootTimer = setInterval(() => {
+  bootStep++;
+  if (bootStep < bootMessages.length) {
+    bootText.textContent = bootMessages[bootStep];
   }
 }, 850);
 
-function startOS() {
-  clearInterval(statusTimer);
-  document.getElementById("boot").classList.add("hide");
+function startSystem() {
+  clearInterval(bootTimer);
+  document.getElementById("startup").classList.add("hide");
 }
 
-setTimeout(startOS, 4300);
+setTimeout(startSystem, 4500);
 
 // CLOCK
 
@@ -694,138 +876,135 @@ function updateClock() {
 updateClock();
 setInterval(updateClock, 1000);
 
-// ANIMATED STARFIELD
+// GALAXY STARFIELD
 
 const canvas = document.getElementById("stars");
 const ctx = canvas.getContext("2d");
 
 let stars = [];
 
-function resizeCanvas() {
+function resize() {
   const ratio = Math.min(window.devicePixelRatio || 1, 2);
+
   canvas.width = innerWidth * ratio;
   canvas.height = innerHeight * ratio;
   canvas.style.width = innerWidth + "px";
   canvas.style.height = innerHeight + "px";
+
   ctx.setTransform(ratio,0,0,ratio,0,0);
 
-  stars = Array.from({length:120}, () => ({
-    x: Math.random() * innerWidth,
-    y: Math.random() * innerHeight,
-    size: Math.random() * 1.8 + .3,
-    speed: Math.random() * .35 + .08,
-    alpha: Math.random()
+  stars = Array.from({length:180}, () => ({
+    x:Math.random()*innerWidth,
+    y:Math.random()*innerHeight,
+    size:Math.random()*1.8+.3,
+    speed:Math.random()*.4+.1
   }));
 }
 
-function animateStars() {
+function drawStars() {
   ctx.clearRect(0,0,innerWidth,innerHeight);
 
-  stars.forEach(star => {
-    star.y += star.speed;
-    star.alpha += .015 * (Math.random() > .5 ? 1 : -1);
+  stars.forEach(s => {
+    s.y += s.speed;
 
-    if (star.y > innerHeight) {
-      star.y = 0;
-      star.x = Math.random() * innerWidth;
+    if(s.y > innerHeight) {
+      s.y = 0;
+      s.x = Math.random()*innerWidth;
     }
 
-    ctx.globalAlpha = Math.max(.15,Math.min(1,star.alpha));
-
-    ctx.fillStyle = "#77eaff";
+    ctx.fillStyle = "#6bdfff";
+    ctx.globalAlpha = Math.random()*.5+.3;
     ctx.shadowBlur = 8;
     ctx.shadowColor = "#00bfff";
 
     ctx.beginPath();
-    ctx.arc(star.x,star.y,star.size,0,Math.PI*2);
+    ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
     ctx.fill();
   });
 
   ctx.globalAlpha = 1;
   ctx.shadowBlur = 0;
 
-  requestAnimationFrame(animateStars);
+  requestAnimationFrame(drawStars);
 }
 
-resizeCanvas();
-animateStars();
+resize();
+drawStars();
 
-window.addEventListener("resize",resizeCanvas);
+window.addEventListener("resize",resize);
 
-// NAVIGATION
+// DOCK CONTROLS
 
 function home() {
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function galaxy() {
-  document.querySelector(".planet-area").scrollIntoView({
+  document.querySelector(".planet-zone").scrollIntoView({
     behavior:"smooth",
     block:"center"
   });
 }
 
 function restart() {
-  document.getElementById("boot").style.display = "flex";
-  document.getElementById("boot").classList.remove("hide");
+  const startup = document.getElementById("startup");
 
-  status.textContent = messages[0];
-  bootIndex = 0;
+  startup.classList.remove("hide");
+  bootText.textContent = bootMessages[0];
+
+  bootStep = 0;
+
+  const timer = setInterval(() => {
+    bootStep++;
+    if(bootStep < bootMessages.length) {
+      bootText.textContent = bootMessages[bootStep];
+    }
+    if(bootStep >= bootMessages.length-1) {
+      clearInterval(timer);
+    }
+  },850);
 
   setTimeout(() => {
-    document.getElementById("boot").style.display = "flex";
-    startOS();
-  },4300);
+    clearInterval(timer);
+    startSystem();
+  },4500);
 }
 
-// FULLSCREEN
-
-function fullscreen() {
-  if (!document.fullscreenElement) {
+function fullScreen() {
+  if(!document.fullscreenElement) {
     document.documentElement.requestFullscreen?.();
   } else {
     document.exitFullscreen?.();
   }
 }
 
-// SOUND CONTROL
+// SOUND EFFECT
 
-let soundEnabled = false;
+let audioEnabled = false;
 
-function soundToggle() {
-  soundEnabled = !soundEnabled;
+function sound() {
+  audioEnabled = !audioEnabled;
 
-  document.getElementById("soundButton").textContent =
-    soundEnabled ? "♫" : "♪";
+  if(!audioEnabled) return;
 
-  if (soundEnabled) {
-    playTone(660);
-  }
-}
+  const Audio = window.AudioContext ||
+                window.webkitAudioContext;
 
-function playTone(frequency) {
-  const AudioContext =
-    window.AudioContext || window.webkitAudioContext;
+  if(!Audio) return;
 
-  if (!AudioContext) return;
-
-  const audio = new AudioContext();
+  const audio = new Audio();
   const oscillator = audio.createOscillator();
-  const gain = audio.createGain();
+  const volume = audio.createGain();
 
-  oscillator.frequency.value = frequency;
   oscillator.type = "sine";
+  oscillator.frequency.value = 650;
+  volume.gain.value = 0.05;
 
-  gain.gain.value = 0.04;
-
-  oscillator.connect(gain);
-  gain.connect(audio.destination);
+  oscillator.connect(volume);
+  volume.connect(audio.destination);
 
   oscillator.start();
-  oscillator.stop(audio.currentTime + .15);
+  oscillator.stop(audio.currentTime + .2);
 
   oscillator.onended = () => audio.close();
 }
