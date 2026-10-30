@@ -4,340 +4,830 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FUTURE OS</title>
+<title>FUTURE OS 2.0</title>
 
 <style>
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  background: #06101d;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-  padding: 20px;
+:root {
+  --cyan: #00eaff;
+  --blue: #087cff;
+  --bg: #020611;
 }
 
-.phone {
-  max-width: 420px;
-  min-height: 800px;
-  margin: auto;
-  padding: 25px;
-  border: 1px solid #16cfff;
+body {
+  background: var(--bg);
+  color: white;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* GALAXY BACKGROUND */
+
+#stars {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 35%,
+    #073c6733, transparent 55%),
+    linear-gradient(180deg,#020611,#06172c);
+  z-index: -1;
+}
+
+/* BOOT SCREEN */
+
+#boot {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: radial-gradient(circle,#07355b,#020611 65%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1s, visibility 1s;
+}
+
+#boot.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.boot-planet {
+  width: 145px;
+  height: 145px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 25%,
+    #b6ffff,#058bd9 30%,#071b50 70%);
+  box-shadow:
+    0 0 35px #00bfff,
+    0 0 90px #006aff;
+  animation: planet 4s linear infinite;
+  position: relative;
+}
+
+.boot-planet::after {
+  content: "";
+  position: absolute;
+  width: 215px;
+  height: 55px;
+  border: 3px solid #00eaff;
+  border-radius: 50%;
+  top: 42px;
+  left: -38px;
+  transform: rotate(-25deg);
+  box-shadow: 0 0 20px #00dfff;
+}
+
+@keyframes planet {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.boot-title {
+  color: var(--cyan);
+  font-size: clamp(28px,6vw,50px);
+  letter-spacing: 10px;
+  margin-top: 45px;
+  text-shadow: 0 0 25px var(--cyan);
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { opacity: .6; }
+  to { opacity: 1; text-shadow: 0 0 40px var(--cyan); }
+}
+
+.boot-sub {
+  margin-top: 12px;
+  color: #8bcfff;
+  letter-spacing: 5px;
+  font-size: 10px;
+}
+
+.loading {
+  width: 230px;
+  height: 5px;
+  background: #183b58;
+  margin-top: 45px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.loading-bar {
+  width: 0;
+  height: 100%;
+  background: var(--cyan);
+  box-shadow: 0 0 20px var(--cyan);
+  animation: load 4s linear forwards;
+}
+
+@keyframes load {
+  to { width: 100%; }
+}
+
+.boot-status {
+  margin-top: 15px;
+  color: #6acfff;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+#skip {
+  margin-top: 25px;
+  padding: 10px 25px;
+  color: var(--cyan);
+  background: transparent;
+  border: 1px solid var(--cyan);
   border-radius: 30px;
-  background: linear-gradient(160deg,#102a43,#050b16);
-  box-shadow: 0 0 35px #008cff55;
+  cursor: pointer;
+}
+
+/* MAIN DASHBOARD */
+
+.container {
+  width: min(1250px,94%);
+  margin: auto;
+  padding: 25px 0 130px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #00bfff55;
+  padding: 15px 5px 22px;
+}
+
+.brand {
+  color: var(--cyan);
+  font-size: 21px;
+  letter-spacing: 5px;
+  font-weight: bold;
+  text-shadow: 0 0 15px var(--cyan);
 }
 
 .status {
-  display: flex;
-  justify-content: space-between;
-  color: #42eaff;
-  font-size: 13px;
+  color: #73dfff;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.hero {
+  text-align: center;
+  padding: 65px 10px 45px;
+}
+
+.hero h1 {
+  font-size: clamp(38px,8vw,75px);
+  letter-spacing: 9px;
+  color: white;
+  text-shadow: 0 0 25px #00cfff;
+}
+
+.hero p {
+  color: #72bce4;
+  letter-spacing: 5px;
+  font-size: 11px;
+  margin-top: 15px;
 }
 
 .clock {
-  text-align: center;
-  margin: 55px 0 35px;
+  margin-top: 30px;
+  font-size: 40px;
+  color: var(--cyan);
+  text-shadow: 0 0 20px #008cff;
+  font-weight: bold;
 }
 
-.clock h1 {
-  font-size: 55px;
-  margin: 0;
-  text-shadow: 0 0 20px #00cfff;
+.date {
+  color: #8cb8d5;
+  margin-top: 8px;
+  font-size: 12px;
 }
 
-.clock p {
-  color: #75b7d9;
+/* PLANET DISPLAY */
+
+.planet-area {
+  height: 175px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
-h2 {
-  color: #42eaff;
-  font-size: 17px;
+.planet {
+  width: 105px;
+  height: 105px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 25%,
+    #c3ffff,#008dce 30%,#06133d 75%);
+  box-shadow:
+    0 0 30px #00bfff,
+    0 0 65px #006aff77;
+  position: relative;
+  animation: float 4s ease-in-out infinite;
+}
+
+.planet::before {
+  content: "";
+  position: absolute;
+  inset: -17px -30px;
+  border: 2px solid #00dfff;
+  border-radius: 50%;
+  transform: rotate(-25deg);
+  box-shadow: 0 0 15px #00cfff;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* APP SECTION */
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.section-heading h2 {
+  font-size: 14px;
+  letter-spacing: 5px;
+  color: var(--cyan);
+}
+
+.section-heading span {
+  color: #649ab8;
+  font-size: 10px;
 }
 
 .apps {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 15px;
-  margin-top: 25px;
+  grid-template-columns: repeat(4,1fr);
+  gap: 20px;
 }
 
 .app {
-  background: #102c46;
-  border: 1px solid #17618c;
-  border-radius: 15px;
-  padding: 20px 5px;
-  text-align: center;
-  cursor: pointer;
+  min-height: 215px;
+  border-radius: 18px;
+  border: 1px solid #00aaff77;
+  background: linear-gradient(145deg,#102b49cc,#030b1ccc);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   color: white;
-  transition: .2s;
+  position: relative;
+  overflow: hidden;
+  transition: .35s;
+  cursor: pointer;
+}
+
+.app::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    transparent,
+    #00dfff15,
+    transparent
+  );
+  transform: rotate(35deg);
+  transition: .6s;
+}
+
+.app:hover::before {
+  top: 100%;
 }
 
 .app:hover {
-  background: #075078;
-  box-shadow: 0 0 18px #00cfff;
-  transform: translateY(-3px);
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 0 35px #00bfff66;
+  border-color: var(--cyan);
 }
 
-.app span {
-  display: block;
-  font-size: 27px;
-  margin-bottom: 10px;
-}
-
-.panel {
-  background: #0b2034;
-  border: 1px solid #145477;
-  border-radius: 15px;
-  padding: 18px;
-  margin-top: 25px;
-}
-
-button {
-  background: #087ca8;
-  border: 1px solid #42eaff;
-  color: white;
-  padding: 12px;
-  border-radius: 9px;
-  cursor: pointer;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  background: #06101d;
-  border: 1px solid #1685b5;
-  color: white;
-  border-radius: 8px;
-}
-
-#screen {
-  display: none;
-}
-
-.back {
+.app-icon {
+  font-size: 55px;
   margin-bottom: 20px;
+  z-index: 1;
 }
 
-a {
-  color: #42eaff;
+.app h3 {
+  font-size: 16px;
+  letter-spacing: 3px;
+  z-index: 1;
 }
 
+.app small {
+  color: #83b6d2;
+  margin-top: 10px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  z-index: 1;
+}
+
+.netflix { color: #ff2638; text-shadow: 0 0 20px red; }
+.disney { color: #79baff; text-shadow: 0 0 20px blue; }
+.youtube { color: #ff3434; text-shadow: 0 0 20px red; }
+.popcorn { color: #ffdc79; text-shadow: 0 0 20px orange; }
+
+.netflix-card { border-color: #ff263855; }
+.disney-card { border-color: #368aff66; }
+.youtube-card { border-color: #ff343466; }
+.popcorn-card { border-color: #ffc64b66; }
+
+/* LOWER PANEL */
+
+.system-panel {
+  margin-top: 45px;
+  padding: 22px;
+  border: 1px solid #00bfff55;
+  background: #061b30bb;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.system-item {
+  text-align: center;
+  font-size: 11px;
+  color: #72caff;
+  letter-spacing: 2px;
+}
+
+.system-item strong {
+  display: block;
+  color: var(--cyan);
+  font-size: 19px;
+  margin-bottom: 7px;
+}
+
+/* NAVIGATION DOCK */
+
+.dock {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(430px,92%);
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #061c31dd;
+  border: 1px solid #00dfff99;
+  border-radius: 25px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px #007bff44;
+  z-index: 5;
+}
+
+.dock button {
+  background: transparent;
+  color: #69dfff;
+  border: 0;
+  font-size: 22px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.dock button:hover {
+  color: white;
+  transform: scale(1.3);
+  text-shadow: 0 0 15px var(--cyan);
+}
+
+.power {
+  width: 53px;
+  height: 53px;
+  border: 2px solid var(--cyan) !important;
+  border-radius: 50%;
+  box-shadow: 0 0 20px #00cfff;
+}
+
+/* MOBILE */
+
+@media(max-width:750px) {
+  .apps {
+    grid-template-columns: repeat(2,1fr);
+    gap: 12px;
+  }
+
+  .app {
+    min-height: 175px;
+  }
+
+  .hero {
+    padding-top: 45px;
+  }
+
+  .hero h1 {
+    letter-spacing: 5px;
+  }
+
+  .brand {
+    font-size: 15px;
+  }
+}
+
+@media(max-width:380px) {
+  .app h3 { font-size: 12px; }
+  .app-icon { font-size: 43px; }
+}
 </style>
 </head>
 
 <body>
 
-<div class="phone">
+<canvas id="stars"></canvas>
 
-<div class="status">
-  <span>FUTURE OS</span>
-  <span>● ONLINE | 100%</span>
-</div>
+<!-- BOOT SCREEN -->
 
-<div id="home">
+<div id="boot">
 
-<div class="clock">
-  <h1 id="time">00:00</h1>
-  <p id="date"></p>
-  <h2>WELCOME TO THE FUTURE</h2>
-</div>
+  <div class="boot-planet"></div>
 
-<h2>APPLICATIONS</h2>
+  <div class="boot-title">FUTURE OS</div>
 
-<div class="apps">
+  <div class="boot-sub">ULTIMATE EDITION 2.0</div>
 
-<div class="app" onclick="openApp('website')">
-  <span>🌐</span>Website
-</div>
+  <div class="loading">
+    <div class="loading-bar"></div>
+  </div>
 
-<div class="app" onclick="openApp('settings')">
-  <span>⚙️</span>Settings
-</div>
+  <div class="boot-status" id="bootStatus">
+    INITIALIZING GALAXY...
+  </div>
 
-<div class="app" onclick="openApp('system')">
-  <span>🖥️</span>System
-</div>
-
-<div class="app" onclick="openApp('browser')">
-  <span>🔎</span>Search
-</div>
-
-<div class="app" onclick="openApp('about')">
-  <span>🚀</span>About
-</div>
-
-<div class="app" onclick="openApp('tools')">
-  <span>🛠️</span>Tools
-</div>
+  <button id="skip" onclick="startOS()">
+    SKIP INTRO
+  </button>
 
 </div>
 
-<div class="panel">
-  <h2>SYSTEM STATUS</h2>
-  <p>● Core system: Operational</p>
-  <p>● Interface: Active</p>
-  <p>● Network: Ready</p>
-</div>
+<!-- MAIN OS -->
+
+<div class="container" id="dashboard">
+
+  <header class="topbar">
+
+    <div class="brand">✧ FUTURE OS</div>
+
+    <div class="status">
+      ● SYSTEM ONLINE
+      <br><br>
+      BUILD 2.0.26
+    </div>
+
+  </header>
+
+  <section class="hero">
+
+    <h1>WELCOME BACK</h1>
+
+    <p>YOUR ENTERTAINMENT. YOUR UNIVERSE.</p>
+
+    <div class="clock" id="clock">00:00</div>
+
+    <div class="date" id="date"></div>
+
+  </section>
+
+  <div class="planet-area">
+    <div class="planet"></div>
+  </div>
+
+  <div class="section-heading">
+    <h2>ENTERTAINMENT HUB</h2>
+    <span>04 APPLICATIONS</span>
+  </div>
+
+  <section class="apps">
+
+    <!-- NETFLIX -->
+
+    <a class="app netflix-card"
+       href="https://www.netflix.com/"
+       target="_blank"
+       rel="noopener noreferrer">
+
+      <div class="app-icon netflix">N</div>
+
+      <h3>NETFLIX</h3>
+
+      <small>MOVIES & SERIES</small>
+
+    </a>
+
+    <!-- DISNEY -->
+
+    <a class="app disney-card"
+       href="https://www.disneyplus.com/"
+       target="_blank"
+       rel="noopener noreferrer">
+
+      <div class="app-icon disney">✦</div>
+
+      <h3>DISNEY+</h3>
+
+      <small>WORLDS OF STORIES</small>
+
+    </a>
+
+    <!-- YOUTUBE -->
+
+    <a class="app youtube-card"
+       href="https://www.youtube.com/"
+       target="_blank"
+       rel="noopener noreferrer">
+
+      <div class="app-icon youtube">▶</div>
+
+      <h3>YOUTUBE</h3>
+
+      <small>WATCH & DISCOVER</small>
+
+    </a>
+
+    <!-- POPCORN GAME -->
+
+    <a class="app popcorn-card"
+       href="https://doodles.google/doodle/celebrating-popcorn/"
+       target="_blank"
+       rel="noopener noreferrer">
+
+      <div class="app-icon popcorn">🍿</div>
+
+      <h3>POPCORN GAME</h3>
+
+      <small>PLAY & ENJOY</small>
+
+    </a>
+
+  </section>
+
+  <section class="system-panel">
+
+    <div class="system-item">
+      <strong>●</strong>
+      SYSTEM
+      <br>ONLINE
+    </div>
+
+    <div class="system-item">
+      <strong>◉</strong>
+      NETWORK
+      <br>READY
+    </div>
+
+    <div class="system-item">
+      <strong>◆</strong>
+      SECURITY
+      <br>ACTIVE
+    </div>
+
+    <div class="system-item">
+      <strong>100%</strong>
+      POWER
+      <br>READY
+    </div>
+
+  </section>
 
 </div>
 
-<div id="screen">
+<!-- NAVIGATION DOCK -->
 
-<button class="back" onclick="goHome()">← HOME</button>
+<nav class="dock">
 
-<h2 id="screenTitle"></h2>
+  <button title="Home" onclick="home()">⌂</button>
 
-<div id="screenContent"></div>
+  <button title="Galaxy" onclick="galaxy()">✧</button>
 
-</div>
+  <button class="power" title="Restart" onclick="restart()">
+    ⏻
+  </button>
 
-</div>
+  <button title="Sound" onclick="soundToggle()" id="soundButton">
+    ♪
+  </button>
+
+  <button title="Fullscreen" onclick="fullscreen()">⛶</button>
+
+</nav>
 
 <script>
 
+// STARTUP SEQUENCE
+
+const messages = [
+  "INITIALIZING GALAXY...",
+  "CONNECTING TO CORE...",
+  "LOADING ENTERTAINMENT HUB...",
+  "ACTIVATING HOLOGRAPHIC DISPLAY...",
+  "SYSTEM READY..."
+];
+
+let bootIndex = 0;
+
+const status = document.getElementById("bootStatus");
+
+const statusTimer = setInterval(() => {
+  bootIndex++;
+  if (bootIndex < messages.length) {
+    status.textContent = messages[bootIndex];
+  }
+}, 850);
+
+function startOS() {
+  clearInterval(statusTimer);
+  document.getElementById("boot").classList.add("hide");
+}
+
+setTimeout(startOS, 4300);
+
 // CLOCK
+
 function updateClock() {
   const now = new Date();
 
-  document.getElementById("time").textContent =
+  document.getElementById("clock").textContent =
     now.toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit"
     });
 
   document.getElementById("date").textContent =
-    now.toDateString();
+    now.toLocaleDateString(undefined, {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
 }
 
-setInterval(updateClock,1000);
 updateClock();
+setInterval(updateClock, 1000);
 
-// OPEN APPLICATIONS
-function openApp(app) {
+// ANIMATED STARFIELD
 
-  document.getElementById("home").style.display = "none";
-  document.getElementById("screen").style.display = "block";
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
 
-  const title = document.getElementById("screenTitle");
-  const content = document.getElementById("screenContent");
+let stars = [];
 
-  if(app === "website") {
-    title.textContent = "WEBSITE PORTAL";
+function resizeCanvas() {
+  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = innerWidth * ratio;
+  canvas.height = innerHeight * ratio;
+  canvas.style.width = innerWidth + "px";
+  canvas.style.height = innerHeight + "px";
+  ctx.setTransform(ratio,0,0,ratio,0,0);
 
-    content.innerHTML = `
-      <p>Enter a website address:</p>
-      <input id="websiteURL" placeholder="https://example.com">
-      <button onclick="visitWebsite()">OPEN WEBSITE</button>
-    `;
-  }
-
-  if(app === "browser") {
-    title.textContent = "WEB SEARCH";
-
-    content.innerHTML = `
-      <input id="searchText" placeholder="Search the web...">
-      <button onclick="searchWeb()">SEARCH</button>
-    `;
-  }
-
-  if(app === "settings") {
-    title.textContent = "SYSTEM SETTINGS";
-
-    content.innerHTML = `
-      <p>Interface: FUTURE OS</p>
-      <p>Theme: Neon Blue</p>
-      <p>Version: 1.0</p>
-      <button onclick="document.body.style.background='#101010'">
-        DARK MODE
-      </button>
-      <button onclick="document.body.style.background='#06101d'">
-        RESET THEME
-      </button>
-    `;
-  }
-
-  if(app === "system") {
-    title.textContent = "SYSTEM MONITOR";
-
-    content.innerHTML = `
-      <p>CPU: Operational</p>
-      <p>Network: Ready</p>
-      <p>Security: Active</p>
-    `;
-  }
-
-  if(app === "about") {
-    title.textContent = "ABOUT FUTURE OS";
-
-    content.innerHTML = `
-      <p>Welcome to FUTURE OS.</p>
-      <p>A custom futuristic mobile interface.</p>
-      <p>Version 1.0</p>
-    `;
-  }
-
-  if(app === "tools") {
-    title.textContent = "SYSTEM TOOLS";
-
-    content.innerHTML = `
-      <p>Device tools and utilities.</p>
-      <button onclick="alert('All systems operational!')">
-        RUN DIAGNOSTICS
-      </button>
-    `;
-  }
+  stars = Array.from({length:120}, () => ({
+    x: Math.random() * innerWidth,
+    y: Math.random() * innerHeight,
+    size: Math.random() * 1.8 + .3,
+    speed: Math.random() * .35 + .08,
+    alpha: Math.random()
+  }));
 }
 
-// WEBSITE LINK
-function visitWebsite() {
+function animateStars() {
+  ctx.clearRect(0,0,innerWidth,innerHeight);
 
-  let url = document.getElementById("websiteURL").value.trim();
+  stars.forEach(star => {
+    star.y += star.speed;
+    star.alpha += .015 * (Math.random() > .5 ? 1 : -1);
 
-  if(!url) {
-    alert("Please enter a website address.");
-    return;
-  }
-
-  if(!/^https?:\/\//i.test(url)) {
-    url = "https://" + url;
-  }
-
-  try {
-    const parsed = new URL(url);
-
-    if(!["http:","https:"].includes(parsed.protocol)) {
-      throw new Error("Invalid protocol");
+    if (star.y > innerHeight) {
+      star.y = 0;
+      star.x = Math.random() * innerWidth;
     }
 
-    window.open(parsed.href,"_blank","noopener,noreferrer");
+    ctx.globalAlpha = Math.max(.15,Math.min(1,star.alpha));
 
-  } catch(error) {
-    alert("Please enter a valid website address.");
+    ctx.fillStyle = "#77eaff";
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = "#00bfff";
+
+    ctx.beginPath();
+    ctx.arc(star.x,star.y,star.size,0,Math.PI*2);
+    ctx.fill();
+  });
+
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
+
+  requestAnimationFrame(animateStars);
+}
+
+resizeCanvas();
+animateStars();
+
+window.addEventListener("resize",resizeCanvas);
+
+// NAVIGATION
+
+function home() {
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+function galaxy() {
+  document.querySelector(".planet-area").scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+}
+
+function restart() {
+  document.getElementById("boot").style.display = "flex";
+  document.getElementById("boot").classList.remove("hide");
+
+  status.textContent = messages[0];
+  bootIndex = 0;
+
+  setTimeout(() => {
+    document.getElementById("boot").style.display = "flex";
+    startOS();
+  },4300);
+}
+
+// FULLSCREEN
+
+function fullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen?.();
+  } else {
+    document.exitFullscreen?.();
   }
 }
 
-// SEARCH THE WEB
-function searchWeb() {
-  const query = document.getElementById("searchText").value.trim();
+// SOUND CONTROL
 
-  if(query) {
-    window.open(
-      "https://www.google.com/search?q=" + encodeURIComponent(query),
-      "_blank",
-      "noopener,noreferrer"
-    );
+let soundEnabled = false;
+
+function soundToggle() {
+  soundEnabled = !soundEnabled;
+
+  document.getElementById("soundButton").textContent =
+    soundEnabled ? "♫" : "♪";
+
+  if (soundEnabled) {
+    playTone(660);
   }
 }
 
-// RETURN HOME
-function goHome() {
-  document.getElementById("screen").style.display = "none";
-  document.getElementById("home").style.display = "block";
+function playTone(frequency) {
+  const AudioContext =
+    window.AudioContext || window.webkitAudioContext;
+
+  if (!AudioContext) return;
+
+  const audio = new AudioContext();
+  const oscillator = audio.createOscillator();
+  const gain = audio.createGain();
+
+  oscillator.frequency.value = frequency;
+  oscillator.type = "sine";
+
+  gain.gain.value = 0.04;
+
+  oscillator.connect(gain);
+  gain.connect(audio.destination);
+
+  oscillator.start();
+  oscillator.stop(audio.currentTime + .15);
+
+  oscillator.onended = () => audio.close();
 }
 
 </script>
